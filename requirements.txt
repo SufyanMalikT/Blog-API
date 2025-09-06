@@ -1,0 +1,8 @@
+Django>=5.0,<6.0
+djangorestframework>=3.14
+django-cors-headers>=4.3
+Pillow>=10.0    # for image uploads (blog post images, avatars)
+python-decouple>=3.8  # for managing secrets via .env
+psycopg2-binary>=2.9  # if you’re using PostgreSQL (remove if not)
+djangorestframework-simplejwt>=5.3  # for JWT authentication
+django-filter>=24.2        
