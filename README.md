@@ -98,3 +98,23 @@ python manage.py runserver
 | DELETE | `/api/posts/<id>/`        | Delete own post          | ✅ (owner)    |
 | POST   | `/api/posts/<id>/like/`   | Like/unlike a post       | ✅            |
 | POST   | `/api/posts/<id>/comment/`| Add comment to post      | ✅            |
+
+## 🔐 Authentication Flow
+1. Register a new account → /api/auth/register/
+2. Login with credentials → /api/auth/login/
+3. Receive access & refresh tokens
+4. Include token in Authorization header:
+```http
+Authorization: Bearer <your_access_token>
+```
+
+## 📌 Future Improvements
+- Add categories/tags for blog posts
+- Implement pagination on posts & comments
+- Add image uploads for blog posts
+- Deploy with Docker & CI/CD
+
+## 👨‍💻 Author
+
+### Sufyan Malik
+📌 [Github Profile](https://github.com/SufyanMalikT)
