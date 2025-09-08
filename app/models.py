@@ -36,9 +36,12 @@ class Comment(models.Model):
         return f"{self.author.username} commented on {self.blog.title}"
     
 class Like(models.Model):
-    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name='likes')
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='likes')
     blog = models.ForeignKey(Blog,related_name="likes",on_delete=models.CASCADE)
     liked_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user','blog')
 
     def __str__(self):
         return f"{self.user.username} liked {self.blog.author.username}'s Blog."

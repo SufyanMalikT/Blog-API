@@ -46,11 +46,11 @@ class BlogSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     image_url = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
-    comments = CommentSerializer(many=True)
+    comments = CommentSerializer(many=True,read_only=True)
     class Meta:
         model = Blog
-        fields = ['title','subtitle','slug','content','published_at','like_count','author','image_url','comments']
-
+        fields = ['id','title','subtitle','slug','content','published_at','like_count','author','image_url','comments']
+        read_only_fields = ['id']
     
     def get_image_url(self, obj):
         request = self.context.get('request')
@@ -59,10 +59,19 @@ class BlogSerializer(serializers.ModelSerializer):
         return None
     
     def get_like_count(self, obj):
-        blog = Blog.objects.get(title=obj.title)
+        blog = Blog.objects.filter(title=obj.title).first()
         likes = blog.likes.all()
         likes = likes.count()
         return likes
+
+    # def create(self, validated_data):
+    #     request = self.context.get('request')
+    #     print(request.user)
+    #     blog = Blog.objects.create(**validated_data)
+    #     blog.author == request.user
+    #     blog.save()
+    #     return blog
+
         
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -72,5 +81,11 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['author','blog','content','posted_at']
         read_only_fields = ['author','blog','posted_at']
+
+    def create(self, validated_data):
+        validated_data['blog'] = self.context['blog']
+        validated_data['author'] = self.context['request'].user
+        return super().create(validated_data)
+
 
 
