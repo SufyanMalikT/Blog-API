@@ -1,15 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from app.views import BlogViewSet, CommentViewSet, LikeViewSet, CustomUserViewSet
+from app.views import BlogViewSet, CustomUserViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'posts', BlogViewSet, basename='posts')
-router.register(r'comments', CommentViewSet, basename='comments')
-router.register(r'likes', LikeViewSet, basename='likes')
 router.register(r'profile', CustomUserViewSet, basename='profile')
 
 urlpatterns = [
@@ -18,6 +16,7 @@ urlpatterns = [
     path('api/', include('app.urls')),  # your app-specific URLs if any
 
     # JWT auth endpoints
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
