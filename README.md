@@ -87,7 +87,7 @@ python manage.py runserver
 
 | Method | Endpoint                  | Description              | Auth Required |
 |--------|---------------------------|--------------------------|---------------|
-| POST   | `/api/auth/register/`     | Register new user        | ❌            |
+| POST   | `/api/profile/`     | Register new user        | ❌            |
 | POST   | `/api/auth/login/`        | Login & get JWT tokens   | ❌            |
 | GET    | `/api/profile/`           | Get user profile         | ✅            |
 | PUT    | `/api/profile/`           | Update own profile       | ✅ (owner)    |
